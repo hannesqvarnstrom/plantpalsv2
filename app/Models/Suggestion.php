@@ -38,6 +38,13 @@ class Suggestion extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $fillable = [
+        'sci_name',
+        'message',
+        'user_id',
+        'taxon_type'
+    ];
+
     public function scopeToBeApproved(Builder $q)
     {
         return $q->where('approved', false);
