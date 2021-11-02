@@ -7,8 +7,19 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <x-jet-welcome />
+            <div class="bg-white py-10 px-10 overflow-hidden shadow-xl sm:rounded-lg">
+                <div>
+                    <h2>Suggestions</h2>
+                    <div>
+                        <h3>Your pending suggestions ({{$pendingSuggestions->count()}})</h3>
+                        @foreach($pendingSuggestions as $p)
+                        <li>
+                            <a href="{{route('suggestions.show', ['suggestion' => $p->id])}}">{{$p->sci_name}}, <small>suggested at {{$p->created_at}}</small></a>
+                        </li>
+                        @endforeach
+                    
+                    </div>
+                </div>
             </div>
         </div>
     </div>

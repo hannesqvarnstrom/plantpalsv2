@@ -6,15 +6,29 @@
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-jet-application-mark class="block h-9 w-auto" />
+                        {{-- <x-jet-application-logo class="block h-9 w-auto" /> --}}
+                        <x-jet-application-logo class="block h-12 w-auto" />
                     </a>
                 </div>
-
+                
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
+                    
+                    @can('make suggestion')
+                    <x-jet-nav-link href="{{route('suggestions.create')}}" :active="request()->routeIs('suggestions.create')">
+                        {{trans('common.suggestions.create-link')}}
+                    </x-jet-nav-link>
+                    @endcan
+
+                    @can('view all suggestions')
+                    <x-jet-nav-link href="{{route('suggestions.index')}}" :active="request()->routeIs('suggestions.index')">
+                        ({{\App\Models\Suggestion::toBeApproved()->count()}})
+                        {{trans('common.suggestions.index-link')}}
+                    </x-jet-nav-link>
+                    @endcan
                 </div>
             </div>
 
