@@ -24,7 +24,7 @@ class SuggestionController extends Controller
      */
     public function create()
     {
-        //
+        return view('suggestions.create');
     }
 
     /**
