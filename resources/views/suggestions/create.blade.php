@@ -8,13 +8,8 @@
             <form method="POST" action="{{ route('suggestions.store') }}"
                 class="bg-white shadow-md rounded p-8 mb-4">
                 @csrf
-                <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
-                        Scientific name
-                      </label>
-                    <input name="sci_name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
-                </div>
-
+                <x-form-field :name="'sci_name'" :label="'Scientific Name'"/>
+                
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
                         Taxon type
