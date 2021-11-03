@@ -12,6 +12,7 @@ class FormField extends Component
     public $name;
     public $label;
     public $required;
+    public $textarea;
     /**
      * Create a new component instance.
      *
@@ -22,7 +23,8 @@ class FormField extends Component
         string $label,
         ?string $type = 'text',
         ?string $id = null,
-        ?bool $required = false
+        ?bool $required = false,
+        ?bool $textarea = false
     )
     {
         $this->name = $name;
@@ -30,6 +32,7 @@ class FormField extends Component
         $this->type = $type;
         $this->id = $id ?? $this->name;
         $this->required = $required;
+        $this->textarea = $textarea;
     }
 
     /**

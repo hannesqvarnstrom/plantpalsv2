@@ -32,7 +32,20 @@
                     </div>
                 </header>
             @endif
-
+            @if(Session::has('message'))
+                <p 
+                id="message"
+                @if(Session::has('status'))
+                class="alert p-5 shadow bg-{{Session::get('status') ?? 'green'}}-700"
+                @endif
+                >
+                    {{Session::get('message')}}
+                </p>
+                <script>
+                    const message = document.querySelector('#message');
+                    setTimeout(() => message.remove(), 2000)
+                </script>
+            @endif
             <!-- Page Content -->
             <main>
                 {{ $slot }}

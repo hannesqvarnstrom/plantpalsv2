@@ -36,7 +36,8 @@ class SuggestionController extends Controller
     public function store(Request $request)
     {
         $request->user()->suggestions()->create($request->all());
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard')
+                ->with('message', 'Suggestion sent!');
     }
 
     /**

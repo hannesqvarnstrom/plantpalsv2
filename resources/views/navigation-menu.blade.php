@@ -155,6 +155,18 @@
             <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-jet-responsive-nav-link>
+            @can('make suggestion')
+            <x-jet-responsive-nav-link href="{{route('suggestions.create')}}" :active="request()->routeIs('suggestions.create')">
+                {{trans('common.suggestions.create-link')}}
+            </x-jet-nav-link>
+            @endcan
+
+            @can('view all suggestions')
+            <x-jet-responsive-nav-link href="{{route('suggestions.index')}}" :active="request()->routeIs('suggestions.index')">
+                ({{\App\Models\Suggestion::toBeApproved()->count()}})
+                {{trans('common.suggestions.index-link')}}
+            </x-jet-nav-link>
+            @endcan
         </div>
 
         <!-- Responsive Settings Options -->
