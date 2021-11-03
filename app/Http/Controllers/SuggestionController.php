@@ -48,7 +48,7 @@ class SuggestionController extends Controller
      */
     public function show(Suggestion $suggestion)
     {
-        //
+        return view('suggestions.show', compact('suggestion'));
     }
 
     /**

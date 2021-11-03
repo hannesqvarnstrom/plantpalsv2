@@ -14,7 +14,9 @@
                         <h3>Your pending suggestions ({{$pendingSuggestions->count()}})</h3>
                         @foreach($pendingSuggestions as $p)
                         <li>
-                            <a href="{{route('suggestions.show', ['suggestion' => $p->id])}}">{{$p->sci_name}}, <small>suggested at {{$p->created_at}}</small></a>
+                            
+                        
+                            @livewire('show-suggestion', ['suggestion' => $p], key($p->id))
                         </li>
                         @endforeach
                     
