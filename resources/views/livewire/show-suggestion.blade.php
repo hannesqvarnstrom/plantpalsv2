@@ -24,9 +24,13 @@
                 <x-jet-secondary-button wire:click="approve" class="text-sm">
                     Approve suggestion
                 </x-jet-secondary-button>
+
+                <x-jet-secondary-button class="text-sm bg-yellow-500">
+                    <a href="{{ route('suggestions.edit', $suggestion) }}">Edit suggestion</a>
+                </x-jet-secondary-button>
             @endcan
             <x-jet-danger-button wire:click="toggle">
-                    Close
+                Close
             </x-jet-danger-button>
         </x-slot>
     </x-jet-dialog-modal>

@@ -70,7 +70,8 @@ class Suggestion extends Model
             case 'Variety':
                 return Variety::create($attributes);
             default:
-                abort(401, 'Taxon type not valid');
+                //return an edit page of the suggestion?
+                return null;
                 break;
         }
     }

@@ -35,6 +35,7 @@ class SuggestionController extends Controller
      */
     public function store(Request $request)
     {
+        abort_if($request->user()->cannot('make suggestion'), 401);
         $request->user()->suggestions()->create($request->all());
         return redirect()->route('dashboard')
                 ->with('message', 'Suggestion sent!');
@@ -46,7 +47,7 @@ class SuggestionController extends Controller
      * @param  \App\Models\Suggestion  $suggestion
      * @return \Illuminate\Http\Response
      */
-    public function show(Suggestion $suggestion)
+    public function show(Request $request, Suggestion $suggestion)
     {
         return view('suggestions.show', compact('suggestion'));
     }
@@ -57,9 +58,10 @@ class SuggestionController extends Controller
      * @param  \App\Models\Suggestion  $suggestion
      * @return \Illuminate\Http\Response
      */
-    public function edit(Suggestion $suggestion)
+    public function edit(Request $request, Suggestion $suggestion)
     {
-        //
+        abort_if($request->user()->cannot('edit suggestion'), 401);
+        return  view('suggestions.edit', compact('suggestion'));
     }
 
     /**
@@ -71,17 +73,26 @@ class SuggestionController extends Controller
      */
     public function update(Request $request, Suggestion $suggestion)
     {
-        //
+        abort_if($request->user()->cannot('edit suggestion'), 401);
+        $suggestion->update($request->all());
+        $suggestion->save();
+        
+        return redirect()->back()->with('message', 'Successfully updated suggestion.');
     }
 
     public function approve(Request $request, Suggestion $suggestion)
     {
-       $resource = $suggestion->approve($request->user());
-        return redirect()->back()->with('message', 'Suggestion successfully approved!');
+        abort_if($request->user()->cannot('approve suggestion'), 401);
+        $resource = $suggestion->approve($request->user());
+        if($resource)
+            return redirect()->route('dashboard')->with('message', 'Suggestion successfully approved!');
+        
+        return redirect()->back()->with('message', 'Suggestion hasn\'t got a valid Taxon type. Please select one and try again');
     }
 
     public function ajaxApprove(Request $request, Suggestion $suggestion)
     {
+        abort_if($request->user()->cannot('approve suggestion'), 401);
         $resource = $suggestion->approve($request->user());
         return $resource;
     }
@@ -92,8 +103,11 @@ class SuggestionController extends Controller
      * @param  \App\Models\Suggestion  $suggestion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Suggestion $suggestion)
+    public function destroy(Request $request, Suggestion $suggestion)
     {
-        //
+        abort_if($request->user()->cannot('delete suggestion'), 401);
+        $suggestion->delete();
+
+        return redirect()->route('dashboard')->with('message', 'Suggestion succesfully deleted!');
     }
 }

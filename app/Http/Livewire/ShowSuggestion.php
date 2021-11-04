@@ -33,6 +33,6 @@ class ShowSuggestion extends Component
                 'App\Models\Variety' => 'varieties'
             };
             redirect()->route($this->route.'.edit', $this->resource);
-        }
+        } else redirect()->route('suggestions.edit', $this->suggestion);
     }
 }
