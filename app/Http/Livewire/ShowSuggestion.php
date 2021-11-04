@@ -10,9 +10,7 @@ class ShowSuggestion extends Component
     public $showSuggestion = false;
     public Suggestion $suggestion;
     public $resource;
-    public $success = false;
-    public $status = '';
-    protected $listeners = ['modalClose' => 'toggle'];
+    public $route;
 
     public function render()
     {
@@ -27,14 +25,14 @@ class ShowSuggestion extends Component
     public function approve()
     {
         $this->resource = $this->suggestion->approve(auth()->user());
-        
-        $this->success = true;
-        $this->route = match($this->resource::class) {
-            'App\Models\Family' => 'families',
-            'App\Models\Genus' => 'genera',
-            'App\Models\Species' => 'species',
-            'App\Models\Variety' => 'varieties'
-        };
-        $this->status = 'Succes in approval! You can edit this addition immediately by clicking ';
+        if($this->resource) {
+            $this->route = match($this->resource::class) {
+                'App\Models\Family' => 'families',
+                'App\Models\Genus' => 'genera',
+                'App\Models\Species' => 'species',
+                'App\Models\Variety' => 'varieties'
+            };
+            redirect()->route($this->route.'.edit', $this->resource);
+        }
     }
 }

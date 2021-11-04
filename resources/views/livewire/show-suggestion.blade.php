@@ -17,12 +17,7 @@
     <x-jet-dialog-modal wire:model="showSuggestion">
         <x-slot name="title">Viewing suggestion</x-slot>
         <x-slot name="content">
-            @if (!$success && $status === '')
-                @include('suggestions.show')
-            @else
-                <p>{{ $status }} <a class="text-lg text-purple-600"
-                        href="{{ route($route . '.edit', $resource) }}">here!</a></p>
-            @endif
+            @include('suggestions.show')
         </x-slot>
         <x-slot name="footer">
             @can('approve suggestion')
@@ -31,14 +26,7 @@
                 </x-jet-secondary-button>
             @endcan
             <x-jet-danger-button wire:click="toggle">
-                @if (!$success && $status === '')
                     Close
-                @else
-                    <a href="/dashboard">
-                        Close
-                    </a>
-
-                @endif
             </x-jet-danger-button>
         </x-slot>
     </x-jet-dialog-modal>
