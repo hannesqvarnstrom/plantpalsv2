@@ -13,9 +13,7 @@
                     <div>
                         <h3>Your pending suggestions ({{$pendingSuggestions->count()}})</h3>
                         @foreach($pendingSuggestions as $p)
-                        <li>
-                            
-                        
+                        <li class="list-none">
                             @livewire('show-suggestion', ['suggestion' => $p], key($p->id))
                         </li>
                         @endforeach
