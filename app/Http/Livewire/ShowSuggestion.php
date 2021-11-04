@@ -9,6 +9,9 @@ class ShowSuggestion extends Component
 {
     public $showSuggestion = false;
     public Suggestion $suggestion;
+
+    protected $listeners = ['modalClose' => 'toggle'];
+
     public function render()
     {
         return view('livewire.show-suggestion');

@@ -18,10 +18,10 @@ class CreateSuggestionsTable extends Migration
             $table->foreignId('user_id')->constrained();
             $table->string('taxon_type')->nullable();
             $table->string('sci_name');
-            $table->string('message');
+            $table->string('message')->nullable()->default(null);
             $table->boolean('approved')->default(false);
-            $table->date('approved_at')->default(null);
-            $table->bigInteger('approved_by')->nullable();
+            $table->date('approved_at')->nullable()->default(null);
+            $table->bigInteger('approved_by')->nullable()->default(null);
             $table->softDeletes();
             $table->timestamps();
         });

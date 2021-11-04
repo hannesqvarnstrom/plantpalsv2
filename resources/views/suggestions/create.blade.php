@@ -11,6 +11,7 @@
                         Taxon type
                       </label>
                     <select required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="taxon_type">
+                        <option value="">Not sure</option>
                         <option value="Variety">Variety</option>
                         <option value="Species">Species</option>
                         <option value="Genus">Genus</option>

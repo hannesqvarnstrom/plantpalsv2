@@ -1,18 +1,32 @@
-<a wire:click="toggle" class="
-cursor-pointer
-text-purple-700
-hover:text-purple-900
-">{{$suggestion->sci_name}}, <small>suggested at {{$suggestion->created_at}}</small></a>
-<x-jet-dialog-modal wire:model="showSuggestion">
-<x-slot name="title">Viewing suggestion</x-slot>
-    <x-slot name="content">
-        @include('suggestions.show')
+<x-card>
+
+    <x-slot name="cardHeader"><a wire:click="toggle" class="cursor-pointer text-purple-700 hover:text-purple-900">
+            {{ $suggestion->sci_name }}
+        </a>
     </x-slot>
-    <x-slot name="footer">
-        <a wire:click="toggle" class="
-        cursor-pointer
-        text-purple-700
-        hover:text-purple-900
-        ">Close</a>
+
+    <x-slot name="cardTag">
+        by <a href="" class="text-purple-700 hover:text-purple-900">{{$suggestion->user->name}}</a> / {{ $suggestion->taxon_type }}
     </x-slot>
-</x-jet-dialog-modal>
+
+    <x-slot name="cardFooter">
+        Suggested at {{ $suggestion->created_at }}
+    </x-slot>
+
+    <x-jet-dialog-modal wire:model="showSuggestion">
+        <x-slot name="title">Viewing suggestion</x-slot>
+        <x-slot name="content">
+            @include('suggestions.show')
+        </x-slot>
+        <x-slot name="footer">
+            @can('approve suggestion')
+                <x-jet-secondary-button class="text-sm">
+                    Approve Suggestion
+                </x-jet-secondary-button>
+            @endcan
+            <x-jet-danger-button wire:click="toggle">
+                Close
+            </x-jet-danger-button>
+        </x-slot>
+    </x-jet-dialog-modal>
+</x-card>

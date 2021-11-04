@@ -47,7 +47,7 @@ class Suggestion extends Model
 
     public function scopeToBeApproved(Builder $q)
     {
-        return $q->where('approved', false);
+        return $q->with('user:name,id')->where('approved', false);
     }
 
     public function user()
