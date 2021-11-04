@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Family;
+use App\Models\Genus;
+use App\Models\Species;
 use App\Models\Suggestion;
+use App\Models\Variety;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -14,7 +18,13 @@ class DashboardController extends Controller
         $pendingSuggestions = $user->suggestions()->toBeApproved()->get();
     
         return view('dashboard', [
-            'pendingSuggestions' => $pendingSuggestions
+            'pendingSuggestions' => $pendingSuggestions,
+            'recentAdditions' => [
+                'families' => Family::orderByDesc('created_at')->take(5)->get(),
+                'genera' => Genus::orderByDesc('created_at')->take(5)->get(),
+                'species' => Species::orderByDesc('created_at')->take(5)->get(),
+                'varieties' => Variety::orderByDesc('created_at')->take(5)->get()
+            ]
         ]);
     }
 }

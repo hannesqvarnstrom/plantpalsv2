@@ -74,6 +74,18 @@ class SuggestionController extends Controller
         //
     }
 
+    public function approve(Request $request, Suggestion $suggestion)
+    {
+       $resource = $suggestion->approve($request->user());
+        return redirect()->back()->with('message', 'Suggestion successfully approved!');
+    }
+
+    public function ajaxApprove(Request $request, Suggestion $suggestion)
+    {
+        $resource = $suggestion->approve($request->user());
+        return $resource;
+    }
+
     /**
      * Remove the specified resource from storage.
      *

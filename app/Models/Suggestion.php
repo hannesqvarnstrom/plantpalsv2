@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Http\Request;
 
 /**
  * App\Models\Suggestion
@@ -38,20 +39,39 @@ class Suggestion extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = [
-        'sci_name',
-        'message',
-        'user_id',
-        'taxon_type'
-    ];
+    protected $guarded = [];
 
     public function scopeToBeApproved(Builder $q)
     {
-        return $q->with('user:name,id')->where('approved', false);
+        return $q->with('user:name,id')->where('approved', 0);
     }
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function approve(User $user)
+    {
+        $this->approved = true;
+        $this->approved_by = $user->id;
+        $this->approved_at = now();
+        $this->save();
+        $attributes = ['sci_name' => $this->sci_name, 'user_id' => $user->id];
+
+
+        switch ($this->taxon_type) {
+            case 'Family':
+                return Family::create($attributes);
+            case 'Genus':
+                return Genus::create($attributes);
+            case 'Species':
+                return Species::create($attributes);
+            case 'Variety':
+                return Variety::create($attributes);
+            default:
+                abort(401, 'Taxon type not valid');
+                break;
+        }
     }
 }

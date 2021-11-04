@@ -20,6 +20,38 @@
                     
                     </div>
                 </div>
+                <div>Recent additions</div>
+                @if($recentAdditions['families']->count())
+                <p>Families:
+                @foreach($recentAdditions['families'] as $family)
+                    {{$family->sci_name}}, 
+                    @endforeach
+                </p>
+                @endif
+
+                @if($recentAdditions['genera']->count())
+                <p>Genera:
+                    @foreach($recentAdditions['genera'] as $genus)
+                    {{$genus->sci_name}} ,
+                    @endforeach
+                </p>
+                @endif
+
+                @if($recentAdditions['species']->count())
+                <p>Species: 
+                @foreach($recentAdditions['species'] as $species)
+                    {{$species->sci_name}}, 
+                @endforeach
+                </p>
+                @endif
+
+                @if($recentAdditions['varieties']->count())
+                <p>Varieties:
+                @foreach($recentAdditions['varieties'] as $variety)
+                    {{$variety->sci_name}}
+                @endforeach
+                </p>
+                @endif
             </div>
         </div>
     </div>

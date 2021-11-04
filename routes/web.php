@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GenusController;
+use App\Http\Controllers\SpeciesController;
 use App\Http\Controllers\SuggestionController;
+use App\Http\Controllers\VarietyController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +28,13 @@ Route::get('/test', function() {
 });
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('suggestions', SuggestionController::class);
+    Route::post('suggestions/{suggestion}/approve', [SuggestionController::class, 'approve'])
+        ->name('suggestions.approve');
+
+    Route::resource('families', FamilyController::class);
+    Route::resource('genera', GenusController::class);
+    Route::resource('species', SpeciesController::class);
+    Route::resource('varieties', VarietyController::class);
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [DashboardController::class, 'index']
