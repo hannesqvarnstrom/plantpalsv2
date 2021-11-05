@@ -53,26 +53,29 @@ class Suggestion extends Model
 
     public function approve(User $user)
     {
-        $this->approved = true;
-        $this->approved_by = $user->id;
-        $this->approved_at = now();
-        $this->save();
-        $attributes = ['sci_name' => $this->sci_name, 'user_id' => $user->id];
-
-
         switch ($this->taxon_type) {
             case 'Family':
-                return Family::create($attributes);
+                return Family::create($this->doApproval($user->id));
             case 'Genus':
-                return Genus::create($attributes);
+                return Genus::create($this->doApproval($user->id));
             case 'Species':
-                return Species::create($attributes);
+                return Species::create($this->doApproval($user->id));
             case 'Variety':
-                return Variety::create($attributes);
+                return Variety::create($this->doApproval($user->id));
             default:
                 //return an edit page of the suggestion?
                 return null;
                 break;
         }
+    }
+
+    private function doApproval(int $id): array
+    {
+        $this->approved = true;
+        $this->approved_by = $id;
+        $this->approved_at = now();
+        $this->save();
+        $attributes = ['sci_name' => $this->sci_name, 'user_id' => $id];
+        return $attributes;
     }
 }

@@ -10,18 +10,34 @@
                 <x-form-field :value="$suggestion->sci_name" :name="'sci_name'" :label="'Scientific Name'"
                     :required="true" />
                 <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="taxon_type">
                         Taxon type
                     </label>
-                    <select
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        name="taxon_type">
-                        <option @if ($suggestion->taxon_type === '')selected @endif value="">Not sure</option>
-                        <option @if ($suggestion->taxon_type === 'Variety')selected @endif value="Variety">Variety</option>
-                        <option @if ($suggestion->taxon_type === 'Species')selected @endif value="Species">Species</option>
-                        <option @if ($suggestion->taxon_type === 'Genus')selected @endif value="Genus">Genus</option>
-                        <option @if ($suggestion->taxon_type === 'Family')selected @endif value="Family">Family</option>
-                    </select>
+                    @livewire('ajax-select', [
+                    'name' => 'taxon_type',
+                    'selected' => $suggestion->taxon_type,
+                    'chosenValue' => $suggestion->taxon_type,
+                    'resource' => $suggestion,
+                    'options' => [
+                    [
+                    'value' => '',
+                    'label' => 'Not sure'
+                    ],
+                    [
+                    'value' => 'Variety',
+                    'label' => 'Variety'
+                    ],
+                    [
+                    'value' => 'Species',
+                    'label' => 'Species'],
+                    [
+                    'value' => 'Genus',
+                    'label' => 'Genus'],
+                    [
+                    'value' => 'Family',
+                    'label' => 'Family'
+                    ],
+                    ]])
                 </div>
                 <x-form-field :value="$suggestion->message" :textarea="true" :name="'message'"
                     :label="'Anything else you want to mention? (optional)'" />

@@ -80,6 +80,13 @@ class SuggestionController extends Controller
         return redirect()->back()->with('message', 'Successfully updated suggestion.');
     }
 
+    public function updateTaxonType(Suggestion $suggestion, string $taxon_type)
+    {
+        $suggestion->taxon_type = $taxon_type;
+        $suggestion->save();
+        return true;
+    }
+
     public function approve(Request $request, Suggestion $suggestion)
     {
         abort_if($request->user()->cannot('approve suggestion'), 401);
