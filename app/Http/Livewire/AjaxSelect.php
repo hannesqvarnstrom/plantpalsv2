@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Http\Controllers\SuggestionController;
 use Livewire\Component;
 
 class AjaxSelect extends Component
